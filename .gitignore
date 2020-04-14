@@ -1,0 +1,4 @@
+**/.exercism
+**/cmake-build-debug
+*.idea
+*.vscode
