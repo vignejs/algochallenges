@@ -14,6 +14,9 @@ class BinaryTree:
     def insert(self, val):
         self.root = self._insert(self.root, val)
 
+    def inorderInsertion(self, val):
+        self.root = self._inorderInsertion(self.root, val)
+
     def _insert(self, root, val):
         if root is None:
             return Node(val)
@@ -31,6 +34,27 @@ class BinaryTree:
             parentNode.left = Node(val)
         else:
             parentNode.right = Node(val)
+
+        return root
+
+    def _inorderInsertion(self, root, val):
+        if root is None:
+            return Node(val)
+
+        currentNode = root
+        stack = []
+
+        while True:
+            if currentNode:
+                stack.append(currentNode)
+                currentNode = currentNode.left
+
+            elif stack:
+                currentNode = stack.pop()
+                currentNode.val = val
+                currentNode = currentNode.right
+            else:
+                break
 
         return root
 
@@ -77,49 +101,6 @@ class BinaryTree:
             currentNode = currentNode.right
         return currentNode
 
-    def delete(self, val):
-        self.root = self._delete(self.root, val)
-
-    def _delete(self, root, val):
-        parentNode, currentNode = self.search(val)
-        if currentNode is None:
-            print("node doest exist")
-            return root
-
-        if parentNode.left.val == val:
-            parentNode.left = self._deleteNode(currentNode)
-        else:
-            parentNode.right = self._deleteNode(currentNode)
-
-        return root
-
-    def _deleteNode(self, node):
-        if node.left is None and node.right is None:
-            return None
-        if node.left and node.right:
-            inOrderSuccessor = self.deleteInOrderSuccessor(node)
-            node.val = inOrderSuccessor.val
-        elif node.left:
-            node = node.left
-        else:
-            node = node.right
-
-    def deleteInOrderSuccessor(self, node):
-        parent = node
-        node = node.right
-
-        while node.left:
-            parent = node
-            node = node.left
-
-        if node.left is None:
-            parent.right = node.right
-        else:
-            parent.left = node.right
-
-        node.right = None
-        return node
-
     def height(self):
         lheight = 0
         currentNode = self.root
@@ -139,15 +120,9 @@ class BinaryTree:
 
 
 t = BinaryTree()
-t.insert(10)
-t.insert(5)
-t.insert(15)
-t.insert(2)
-t.insert(5)
-t.inorderTraversal(t.root)
+l = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+for i in l:
+    t.inorderInsertion(i)
+t.inorderTraversal()
 print()
-t.search(5)
-t.search(2)
-t.search(12)
-t.delete(10)
-t.inorderTraversal(t.root)
+print(t.height())

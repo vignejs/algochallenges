@@ -71,7 +71,7 @@ class BinaryTree:
 # the standard input according to the problem statement.
 
 n = int(input())
-for i in range(n):
+for _ in range(n):
     t = BinaryTree()
     line = input()
     lspilt = line.split("/")
