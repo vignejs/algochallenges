@@ -1,19 +1,19 @@
 #include "triangle.h"
 
 namespace triangle {
-    int kind(float x, float y, float z) {
-        if (x + y < z || y + z < x || x + z < y || x <= 0 || y <= 0 || z <= 0) {
+    flavor kind(double x, double y, double z) {
+        std::array<double, 3> side{x, y, z};
+        std::sort(std::begin(side), std::end(side));
+        if (side[0] + side[1] < side[2] || side[0] <= 0) {
             throw std::domain_error("illegal triangle");
+        } else if (side[0] == side[2]) {
+            return flavor::equilateral;
+        } else if (side[0] + side[1] == side[2]) {
+            return flavor::degenerate;
+        } else if (side[0] == side[1] || side[1] == side[2]) {
+            return flavor::isosceles;
         } else {
-            if (x == y && y == z && x == z) {
-                return 0;
-            } else if (x + y == z || y + z == x || x + z == y) {
-                return 3;
-            } else if (x == y || y == z || x == z) {
-                return 1;
-            } else {
-                return 2;
-            }
+            return flavor::scalene;
         }
     }
 }
