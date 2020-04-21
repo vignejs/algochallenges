@@ -2,15 +2,11 @@
 
 namespace grains {
 
-    unsigned long long square(const int &x) {
-        return pow(2, x-1);
+    ull square(int y) {
+        return 1ull << (y - 1);
     }
 
-    unsigned long long total() {
-        unsigned long long t = square(64);
-        for (int i = 1; i <= 64; i++){
-            t += t / 2;
-        }
-        return t;
+    ull total() {
+        return std::bitset<64>().set().to_ulong();
     }
 }  // namespace grains
