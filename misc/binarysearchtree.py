@@ -120,22 +120,17 @@ class BinaryTree:
         node.right = None
         return node
 
-    def height(self):
-        lheight = 0
-        currentNode = self.root
-        while currentNode:
-            currentNode = currentNode.left
-            lheight += 1
-        rheight = 0
-        currentNode = self.root
-        while currentNode:
-            currentNode = currentNode.right
-            rheight += 1
+    def height(self, root):
+        if root:
+            ldepth = self.height(root.left)
+            hdepth = self.height(root.right)
 
-        if lheight > rheight:
-            return lheight
+            if ldepth > hdepth:
+                return ldepth + 1
+            else:
+                return hdepth + 1
         else:
-            return rheight
+            return 0
 
 
 t = BinaryTree()
